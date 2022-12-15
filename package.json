@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  },
+  "name": "rollthedice-discordbot",
+  "version": "1.0.0",
+  "description": "A Discord Bot that throws out random scenarios based on a premade list",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^8.29.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheShadowEevee/RollTheDice-DiscordBot.git"
+  },
+  "keywords": [
+    "RTD",
+    "Discord",
+    "Bot",
+    "Roll",
+    "The",
+    "Dice"
+  ],
+  "author": "TheShadowEevee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheShadowEevee/RollTheDice-DiscordBot/issues"
+  },
+  "homepage": "https://github.com/TheShadowEevee/RollTheDice-DiscordBot#readme"
+}

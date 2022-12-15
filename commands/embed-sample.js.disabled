@@ -1,0 +1,24 @@
+/*
+*  Konpeki Shiho - Slash Command Definition File
+*  embed-sample.js - A simple generator for embeds to test the possibilities avalible
+*
+*  See https://discordjs.guide/popular-topics/embeds.html for more information on embeds
+*/
+
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('embed-sample')
+		.setDescription('Sample Embed Generator'),
+	async execute(interaction) {
+		const exampleEmbed = new EmbedBuilder()
+			.setColor(0x0099FF)
+			.setTitle('Sample Embed')
+			.setAuthor({ name: `${interaction.client.user.username}`, iconURL: `${interaction.client.user.avatarURL({ size:4096, dynamic:true })}` })
+			.setDescription('Some Embed Text');
+
+		await interaction.reply({ embeds: [exampleEmbed], ephemeral: true });
+	},
+};
