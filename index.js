@@ -7,6 +7,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+// Add pm2 metrics - this should NEVER track ANYTHING identifiable. This is purely for basic metrics and bot performance tracking
+const metrics = require('./pm2-metrics.js');
+
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token, botOwner } = require('./config.json');
@@ -47,6 +50,15 @@ client.on(Events.InteractionCreate, async interaction => {
 	if (!command) {
 		console.error(`No command matching ${interaction.commandName} was found.`);
 		await interaction.reply({ content: `This command no longer exists! Please contact ${botOwner} to report that this is happening!`, ephemeral: true });
+
+		// Report error to PM2 dashboard
+		metrics.interactionErrors.inc();
+		metrics.io.notifyError(new Error('Interaction doesn\'t exist'), {
+			custom: {
+				interactionCommand: interaction.commandName,
+			},
+		});
+
 		return;
 	}
 
@@ -56,7 +68,22 @@ client.on(Events.InteractionCreate, async interaction => {
 	catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+
+		// Report error to PM2 dashboard
+		metrics.interactionErrors.inc();
+		metrics.io.notifyError(new Error('Error executing interaction'), {
+			custom: {
+				interactionCommand: interaction.commandName,
+				error: error,
+			},
+		});
+
 	}
+
+	// Successful Execution, report as a PM2 metric
+	// If the bot gets a lot of use, consider removing this for performance
+	metrics.interactionSuccess();
+
 });
 
 // Log in to Discord with your client's token
