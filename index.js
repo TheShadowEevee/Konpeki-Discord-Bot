@@ -44,6 +44,14 @@ for (const file of commandFiles) {
 client.once(Events.ClientReady, c => {
 	logger.log(logger.logLevels.INFO, `${logger.colorText('Ready!', logger.textColor.Green)} Logged in as ${logger.colorText(c.user.tag, logger.textColor.Blue)}`);
 	client.user.setPresence({ activities: [{ name: activity }], status: status });
+
+	// Track websocket heartbeat with PM2 Histogram
+	let latency = 0;
+	setInterval(function() {
+		latency = c.ws.ping;
+		metrics.websocketHeartbeatHist.update(latency);
+	}, 1000);
+
 });
 
 // Client "on" Events
