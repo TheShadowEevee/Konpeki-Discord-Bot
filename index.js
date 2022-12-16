@@ -8,7 +8,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 // Add pm2 metrics - this should NEVER track ANYTHING identifiable. This is purely for basic metrics and bot performance tracking
-const metrics = require('./pm2-metrics.js');
+const metrics = require('./utils/pm2-metrics.js');
+
+// Use a custom logging script
+const logger = require('./utils/logging.js');
 
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
@@ -31,14 +34,14 @@ for (const file of commandFiles) {
 		client.commands.set(command.data.name, command);
 	}
 	else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+		logger.log(logger.logLevels.WARN, `The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
 }
 
 // When the client is ready, run this code (only once)
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, c => {
-	console.log(`Ready! Logged in as ${c.user.tag}`);
+	logger.log(logger.logLevels.INFO, `${logger.colorText('Ready!', logger.textColor.Green)} Logged in as ${logger.colorText(c.user.tag, logger.textColor.Blue)}`);
 });
 
 // Client "on" Events
@@ -48,7 +51,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	const command = interaction.client.commands.get(interaction.commandName);
 
 	if (!command) {
-		console.error(`No command matching ${interaction.commandName} was found.`);
+		logger.log(logger.logLevels.ERROR, `No command matching ${interaction.commandName} was found.`);
 		await interaction.reply({ content: `This command no longer exists! Please contact ${botOwner} to report that this is happening!`, ephemeral: true });
 
 		// Report error to PM2 dashboard
@@ -66,7 +69,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction);
 	}
 	catch (error) {
-		console.error(error);
+		logger.log(logger.logLevels.ERROR, error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 
 		// Report error to PM2 dashboard

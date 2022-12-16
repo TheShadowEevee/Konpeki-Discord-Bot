@@ -1,3 +1,8 @@
+/*
+*  Konpeki Shiho - Utility Definition File
+*  pm2-metrics.js - A place to keep all pm2 metrics and error definitions
+*/
+
 const io = require('@pm2/io');
 
 const interactionErrors = io.counter({
