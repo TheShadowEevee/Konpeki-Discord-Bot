@@ -35,6 +35,9 @@ const colorText = function(message, color) {
 
 // Print log message to console based on severity level
 const log = function(logLevel, message) {
+	// Used in the event the message is an error: see case 3
+	const lines = message.toString().split('\n');
+
 	switch (logLevel) {
 	case 0:
 		console.log(datetime + ' ' + colorText('[DEBUG]', textColor.Gray) + ' ' + message);
@@ -46,7 +49,14 @@ const log = function(logLevel, message) {
 		console.log(datetime + ' ' + colorText('[WARN]', textColor.Yellow) + ' ' + message);
 		break;
 	case 3:
-		console.log(datetime + ' ' + colorText('[ERROR]', textColor.Red) + ' ' + message);
+		// Errors tend to have multiple lines, handle them specially to include the first two.
+		console.log(datetime + ' ' + colorText('[ERROR]', textColor.Red) + ' ' + lines[0]);
+
+		// If the error only has 1 line, don't try to read a second one
+		if (lines[1] != null) {
+			console.log(datetime + ' ' + colorText('[ERROR]', textColor.Red) + ' |   ' + lines[1].trim());
+		}
+
 		break;
 	default:
 		console.log(datetime + ' ' + colorText('[INFO]', textColor.White) + ' ' + message);
