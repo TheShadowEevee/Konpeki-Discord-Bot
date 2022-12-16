@@ -16,6 +16,7 @@ const logger = require('./utils/logging.js');
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token, botOwner } = require('./config.json');
+const { activity, status } = require('./presence.json');
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -42,6 +43,7 @@ for (const file of commandFiles) {
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, c => {
 	logger.log(logger.logLevels.INFO, `${logger.colorText('Ready!', logger.textColor.Green)} Logged in as ${logger.colorText(c.user.tag, logger.textColor.Blue)}`);
+	client.user.setPresence({ activities: [{ name: activity }], status: status });
 });
 
 // Client "on" Events
