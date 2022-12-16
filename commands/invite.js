@@ -1,8 +1,6 @@
 /*
 *  Konpeki Discord Bot - Slash Command Definition File
 *  invite.js - Uses your bot's clientID to create and share it's own invite link
-*
-*  Function modified from https://discordjs.guide/creating-your-bot/slash-commands.html
 */
 
 const { SlashCommandBuilder } = require('discord.js');
