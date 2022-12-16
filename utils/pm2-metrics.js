@@ -18,7 +18,7 @@ const interactionSuccessMeter = io.meter({
 });
 
 const websocketHeartbeatHist = io.histogram({
-	name: 'Websocket Heartbeat (ms)',
+	name: 'Avg. Websocket Heartbeat (ms) / 5 min.',
 	measurement: 'mean',
 });
 
