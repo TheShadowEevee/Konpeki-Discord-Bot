@@ -16,12 +16,23 @@ module.exports = {
 	// Optional user selection for avatar target; target selves if none.
 		.addUserOption(option =>
 			option.setName('user')
-				.setDescription('The user to get the avatar from'))
+				.setDescription('Select the user to get an avatar from'))
 
 	// Optional choice for user to choose avatar size; 4096 if no selection.
 		.addStringOption(option =>
 			option.setName('format')
-				.setDescription('The gif category')
+				.setDescription('Select what format you want the output to be')
+				.addChoices(
+					{ name: 'WebP', value: 'webp' },
+					{ name: 'PNG', value: 'png' },
+					{ name: 'JPEG', value: 'jpg' },
+				))
+
+
+	// Optional choice for user to choose avatar format; webp if no selection.
+		.addStringOption(option =>
+			option.setName('size')
+				.setDescription('Select what size you want the output to be')
 				.addChoices(
 					{ name: '4096px', value: '4096' },
 					{ name: '2048px', value: '2048' },
@@ -39,17 +50,6 @@ module.exports = {
 				))
 
 
-	// Optional choice for user to choose avatar format; webp if no selection.
-		.addStringOption(option =>
-			option.setName('size')
-				.setDescription('The gif category')
-				.addChoices(
-					{ name: 'WebP', value: 'webp' },
-					{ name: 'PNG', value: 'png' },
-					{ name: 'JPEG', value: 'jpg' },
-				))
-
-
 	// Optional Ephemeral check to allow user to choose command results to be shared publicly or private; send to self only if no selection.
 		.addStringOption(option =>
 			option.setName('ephemeral')
@@ -62,9 +62,9 @@ module.exports = {
 	async execute(interaction) {
 		const discordUser = interaction.options.getUser('user') ?? interaction.user;
 		const avatarFormat = interaction.options.getString('format') ?? 'webp';
-		const avatarSize = interaction.options.getString('size') ?? 4096;
-		const isEphemeral = interaction.options.getString('ephemeral') ?? true;
+		const avatarSize = Number(interaction.options.getString('size')) ?? 4096;
+		const isEphemeral = interaction.options.getString('ephemeral') ?? 'true';
 
-		await interaction.reply({ content: `${discordUser.avatarURL({ format:avatarFormat, size:avatarSize, dynamic:true })}`, ephemeral: isEphemeral });
+		await interaction.reply({ content: `${discordUser.avatarURL({ extension:avatarFormat, size:avatarSize, forceStatic:false })}`, ephemeral: (isEphemeral === 'true') });
 	},
 };
