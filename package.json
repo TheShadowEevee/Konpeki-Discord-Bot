@@ -4,9 +4,9 @@
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3"
   },
-  "name": "rollthedice-discordbot",
+  "name": "konpeki-discordbot",
   "version": "1.0.0",
-  "description": "A Discord Bot that throws out random scenarios based on a premade list",
+  "description": "A Discord bot with varied functionalities",
   "main": "index.js",
   "devDependencies": {
     "eslint": "^8.29.0"
@@ -16,20 +16,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheShadowEevee/RollTheDice-DiscordBot.git"
+    "url": "git+https://github.com/TheShadowEevee/Konpeki-Discord-Bot.git"
   },
   "keywords": [
     "RTD",
     "Discord",
     "Bot",
-    "Roll",
-    "The",
-    "Dice"
+    "Konpeki"
   ],
   "author": "TheShadowEevee",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TheShadowEevee/RollTheDice-DiscordBot/issues"
+    "url": "https://github.com/TheShadowEevee/Konpeki-Discord-Bot/issues"
   },
-  "homepage": "https://github.com/TheShadowEevee/RollTheDice-DiscordBot#readme"
+  "homepage": "https://github.com/TheShadowEevee/Konpeki-Discord-Bot#readme"
 }
