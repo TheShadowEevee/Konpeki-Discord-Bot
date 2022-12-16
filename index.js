@@ -104,13 +104,13 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 // Joined a server
-client.on(Events.guildCreate, guild => {
+client.on(Events.GuildCreate, guild => {
 	// Report current server count with PM2 (Servers counted anonymously)
 	metrics.serverCount.set(guild.client.guilds.cache.size);
 });
 
 // Removed from a server
-client.on(Events.guildDelete, guild => {
+client.on(Events.GuildDelete, guild => {
 	// Report current server count with PM2 (Servers counted anonymously)
 	metrics.serverCount.set(guild.client.guilds.cache.size);
 });
