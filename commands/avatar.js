@@ -1,9 +1,6 @@
 /*
 *  Konpeki Discord Bot - Slash Command Definition File
-*  avatar.js - A primative Discord avatar grabbing function
-*
-*  Todo: Allow users to choose between the sizes as an optional dropdown
-*  Todo: Allow users to choose if they want to avatar to be ephemeral or sent in the channel
+*  avatar.js - A Discord avatar grabbing function
 */
 
 const { SlashCommandBuilder } = require('discord.js');
