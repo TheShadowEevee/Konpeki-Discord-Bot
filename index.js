@@ -1,5 +1,5 @@
 /*
-*  Konpeki Shiho - Main Bot File
+*  Konpeki Discord Bot - Main Bot File
 *  All base level bot setup is done here
 */
 

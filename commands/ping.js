@@ -1,5 +1,5 @@
 /*
-*  Konpeki Shiho - Slash Command Definition File
+*  Konpeki Discord Bot - Slash Command Definition File
 *  ping.js - A simple ping function
 *
 *  Function modified from https://discordjs.guide/creating-your-bot/slash-commands.html

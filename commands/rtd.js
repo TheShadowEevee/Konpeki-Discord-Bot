@@ -1,5 +1,5 @@
 /*
-*  Konpeki Shiho - Slash Command Definition File
+*  Konpeki Discord Bot - Slash Command Definition File
 *  rtd.js - In-Dev function
 */
 

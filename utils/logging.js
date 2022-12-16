@@ -1,5 +1,5 @@
 /*
-*  Konpeki Shiho - Utility Definition File
+*  Konpeki Discord Bot - Utility Definition File
 *  logging.js - A custom logging script to apply information to output
 *
 *  Though console.error() and console.warn() exist, they don't exactly fit what is wanted here.

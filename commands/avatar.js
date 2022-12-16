@@ -1,5 +1,5 @@
 /*
-*  Konpeki Shiho - Slash Command Definition File
+*  Konpeki Discord Bot - Slash Command Definition File
 *  avatar.js - A primative Discord avatar grabbing function
 *
 *  Todo: Allow users to choose between the sizes as an optional dropdown

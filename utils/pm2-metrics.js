@@ -1,5 +1,5 @@
 /*
-*  Konpeki Shiho - Utility Definition File
+*  Konpeki Discord Bot - Utility Definition File
 *  pm2-metrics.js - A place to keep all pm2 metrics and error definitions
 */
 
