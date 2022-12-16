@@ -1,3 +1,10 @@
+/*
+*  Konpeki Discord Bot - Slash Command Configuration File
+*  deploy-commands.js - Gathers all current .js files in the commands folder and publishes a list to Discord
+*
+*  Code modified based on example from the discord.js guides
+*/
+
 const { REST, Routes } = require('discord.js');
 const { clientId, token } = require('./config.json');
 const fs = require('node:fs');

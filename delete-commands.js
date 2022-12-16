@@ -1,3 +1,11 @@
+/*
+*  Konpeki Discord Bot - Slash Command Configuration File
+*  delete-commands.js - Clears all slash commands from Discord to remove any old commands
+*
+*  Code modified based on example from the discord.js guides
+*  Run `node deploy-commands.js` after this to recreate your slash commands
+*/
+
 const { REST, Routes } = require('discord.js');
 const { clientId, token } = require('./config.json');
 
