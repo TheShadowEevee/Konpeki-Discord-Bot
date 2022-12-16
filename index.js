@@ -52,9 +52,13 @@ client.once(Events.ClientReady, c => {
 		metrics.websocketHeartbeatHist.update(latency);
 	}, 1000);
 
+	// Report current server count with PM2 (Servers counted anonymously)
+	metrics.serverCount.set(c.guilds.cache.size);
+
 });
 
 // Client "on" Events
+// Someone used an interaction
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 
@@ -97,6 +101,18 @@ client.on(Events.InteractionCreate, async interaction => {
 	// If the bot gets a lot of use, consider removing this for performance
 	metrics.interactionSuccess();
 
+});
+
+// Joined a server
+client.on(Events.guildCreate, guild => {
+	// Report current server count with PM2 (Servers counted anonymously)
+	metrics.serverCount.set(guild.client.guilds.cache.size);
+});
+
+// Removed from a server
+client.on(Events.guildDelete, guild => {
+	// Report current server count with PM2 (Servers counted anonymously)
+	metrics.serverCount.set(guild.client.guilds.cache.size);
 });
 
 // Log in to Discord with your client's token

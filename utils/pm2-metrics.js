@@ -22,6 +22,10 @@ const websocketHeartbeatHist = io.histogram({
 	measurement: 'mean',
 });
 
+const serverCount = io.metric({
+	name    : 'Server Count',
+});
+
 const interactionSuccess = function() {
 	interactionSuccessCounter.inc();
 	interactionSuccessMeter.mark();
@@ -32,4 +36,5 @@ module.exports = {
 	interactionErrors,
 	interactionSuccess,
 	websocketHeartbeatHist,
+	serverCount,
 };
