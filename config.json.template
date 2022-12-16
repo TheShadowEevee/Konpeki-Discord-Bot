@@ -1,5 +1,6 @@
 {
 	"token": "Bot Token Here",
 	"clientId": "0123456789012345678",
+	"botName": "Konpeki Bot",
     "botOwner": "DiscordUser#1234"
 }
