@@ -5,6 +5,7 @@
 
 const { SlashCommandBuilder } = require('discord.js');
 const { randomInt } = require('node:crypto');
+const { abs } = require('node:math');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -56,8 +57,8 @@ module.exports = {
 		let rollModNota = '';
 
 		// Limit numbers rollable to prevent spam and API issues
-		if (rollCount > 99) {
-			await interaction.reply({ content: `You want ${rollCount} numbers?! That's a bit much, even for me...\nTry 99 or less please!`, ephemeral: true });
+		if (rollCount > 100) {
+			await interaction.reply({ content: `You want ${rollCount} numbers?! That's a bit much, even for me...\nTry 100 or less please!`, ephemeral: true });
 			return;
 		}
 		// Prevent 0 or less numbers
@@ -85,8 +86,8 @@ module.exports = {
 		}
 
 		if (rollMod != 0) {
-			rollModStr = ' ' + modSign + ' ' + rollMod;
-			rollModNota = modSign + rollMod;
+			rollModStr = ' ' + modSign + ' ' + (rollMod);
+			rollModNota = modSign + abs(rollMod);
 		}
 
 		const diceRollsString = diceRolls.toString().split(',').join(' + ');
