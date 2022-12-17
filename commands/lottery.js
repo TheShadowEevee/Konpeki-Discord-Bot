@@ -65,6 +65,11 @@ module.exports = {
 			lotteryNumbers.push(randomInt(1, maxRoll));
 		}
 
-		await interaction.reply({ content: `Your lucky numbers are...\n${lotteryNumbers.toString().split(',').join(', ')}.`, ephemeral: (isEphemeral === 'true') });
+		if (rollCount === 1) {
+			await interaction.reply({ content: `Your lucky number is...\n${lotteryNumbers.toString().split(',').join(', ')}.`, ephemeral: (isEphemeral === 'true') });
+		}
+		else {
+			await interaction.reply({ content: `Your lucky numbers are...\n${lotteryNumbers.toString().split(',').join(', ')}.`, ephemeral: (isEphemeral === 'true') });
+		}
 	},
 };
