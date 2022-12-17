@@ -86,8 +86,8 @@ module.exports = {
 		}
 
 		if (rollMod != 0) {
-			rollModStr = ' ' + modSign + ' ' + (rollMod);
-			rollModNota = modSign + abs(rollMod);
+			rollModStr = ' ' + modSign + ' ' + Math.abs(rollMod);
+			rollModNota = modSign + Math.abs(rollMod);
 		}
 
 		const diceRollsString = diceRolls.toString().split(',').join(' + ');
