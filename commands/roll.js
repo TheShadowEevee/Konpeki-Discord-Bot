@@ -5,7 +5,6 @@
 
 const { SlashCommandBuilder } = require('discord.js');
 const { randomInt } = require('node:crypto');
-const { abs } = require('node:math');
 
 module.exports = {
 	data: new SlashCommandBuilder()
