@@ -10,12 +10,12 @@ module.exports = {
 		.setName('avatar')
 		.setDescription('Shares a users current avatar')
 
-	// Optional user selection for avatar target; target selves if none.
+		// Optional user selection for avatar target; target selves if none.
 		.addUserOption(option =>
 			option.setName('user')
 				.setDescription('Select the user to get an avatar from'))
 
-	// Optional choice for user to choose avatar size; 4096 if no selection.
+		// Optional choice for user to choose avatar size; 4096 if no selection.
 		.addStringOption(option =>
 			option.setName('format')
 				.setDescription('Select what format you want the output to be')
@@ -26,7 +26,7 @@ module.exports = {
 				))
 
 
-	// Optional choice for user to choose avatar format; webp if no selection.
+		// Optional choice for user to choose avatar format; webp if no selection.
 		.addStringOption(option =>
 			option.setName('size')
 				.setDescription('Select what size you want the output to be')
@@ -47,7 +47,7 @@ module.exports = {
 				))
 
 
-	// Optional Ephemeral check to allow user to choose command results to be shared publicly or private; send to self only if no selection.
+		// Optional Ephemeral check to allow user to choose command results to be shared publicly or private; send to self only if no selection.
 		.addStringOption(option =>
 			option.setName('ephemeral')
 				.setDescription('Post the avatar in the current channel')
