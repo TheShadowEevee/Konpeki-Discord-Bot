@@ -19,15 +19,26 @@ if (fs.existsSync('./data/help-text.json')) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setDescription('Provides information on avalible commands'),
+		.setDescription('Provides information on avalible commands')
+
+		// Allow choosing the help page to open
+		.addNumberOption(option =>
+			option.setName('page')
+				.setDescription('Choose help page to skip to'),
+		),
+
 	async execute(interaction) {
 
-		let pageNumber = 1;
+		let pageNumber = interaction.options.getNumber('page') ?? 1;
 		const commandsPerPage = 5;
 		let commandsThisPage = 0;
 
 		const numberOfCommands = Object.keys(helpFile).length;
 		const pageTotal = String(Math.ceil(numberOfCommands / commandsPerPage));
+
+		if (pageNumber > pageTotal) {
+			pageNumber = 1;
+		}
 
 		let embedPartOne = {
 			color: 0x0099ff,
@@ -131,7 +142,7 @@ module.exports = {
 		}
 
 		// Button code
-		const collector = interaction.channel.createMessageComponentCollector({ time: 30000 });
+		const collector = interaction.channel.createMessageComponentCollector({ time: 60000 });
 
 		collector.on('collect', async i => {
 
