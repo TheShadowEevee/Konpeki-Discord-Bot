@@ -68,7 +68,12 @@ try {
 	// See https://stackoverflow.com/a/34347475
 	const helpJSON = JSON.stringify(JSON.parse(helpJSONString.replace(/,(?!\s*?[{["'\w])/g, '')), null, 4);
 
-	// write file to disk
+	// Create data folder if it doesn't exist
+	if (!fs.existsSync('data')) {
+		fs.mkdirSync('data');
+	}
+
+	// Write file to disk
 	fs.writeFile('./data/help-text.json', helpJSON, err => {
 		if (err) {
 			console.log(`Unable to write help-text.json: ${err}`);
