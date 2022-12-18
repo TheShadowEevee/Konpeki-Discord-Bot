@@ -11,7 +11,7 @@ const { clientId, botName, botOwner } = require('../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('about')
-		.setDescription('Gives basic information about this bot.'),
+		.setDescription('Gives basic information about the bot'),
 	async execute(interaction) {
 
 		const exampleEmbed = new EmbedBuilder()
