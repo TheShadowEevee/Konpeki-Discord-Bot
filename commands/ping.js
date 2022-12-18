@@ -12,6 +12,6 @@ module.exports = {
 		.setName('ping')
 		.setDescription('Checks to see if the bot is online, as well as it\'s ping'),
 	async execute(interaction) {
-		await interaction.reply({ content: 'Pong!', ephemeral: true });
+		await interaction.reply({ content: `Pong! Current Websocket Heartbeat / ping is ${interaction.client.ws.ping}ms.`, ephemeral: true });
 	},
 };
