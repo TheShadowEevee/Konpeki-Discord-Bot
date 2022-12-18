@@ -35,13 +35,19 @@ module.exports = {
 
 		const numberOfCommands = Object.keys(helpFile).length;
 		const pageTotal = String(Math.ceil(numberOfCommands / commandsPerPage));
+		let userRoleColor = Number('0x' + interaction.member.displayHexColor.split('#')[1]);
+
+		// This will also unintentionally catch roles with full black color (#000000), but it should be fine.
+		if (userRoleColor == 0) {
+			userRoleColor = Number(0x55ffff);
+		}
 
 		if (pageNumber > pageTotal) {
 			pageNumber = 1;
 		}
 
 		let embedPartOne = {
-			color: 0x0099ff,
+			color: userRoleColor,
 			title: 'Help Text',
 			description: `Page ${pageNumber} of ${pageTotal}`,
 		};
@@ -142,7 +148,7 @@ module.exports = {
 		}
 
 		// Button code
-		const collector = interaction.channel.createMessageComponentCollector({ time: 60000 });
+		const collector = interaction.channel.createMessageComponentCollector({ time: 300000 });
 
 		collector.on('collect', async i => {
 
@@ -155,7 +161,7 @@ module.exports = {
 
 			// Replicate the above code to remake the help model for the new page. Again, there has to be an easier way to do this.
 			embedPartOne = {
-				color: 0x0099ff,
+				color: userRoleColor,
 				title: 'Help Text',
 				description: `Page ${pageNumber} of ${pageTotal}`,
 			};
@@ -257,5 +263,6 @@ module.exports = {
 		});
 
 		await interaction.reply({ embeds: [Object.assign({}, embedPartOne, JSON.parse(embedPartTwo))], components: [ buttonList ], ephemeral: true });
+
 	},
 };
