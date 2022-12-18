@@ -10,7 +10,7 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('Checks to see if the you or the bot is online'),
+		.setDescription('Checks to see if the bot is online, as well as it\'s ping'),
 	async execute(interaction) {
 		await interaction.reply({ content: 'Pong!', ephemeral: true });
 	},
