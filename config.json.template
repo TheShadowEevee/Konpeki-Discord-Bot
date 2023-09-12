@@ -2,5 +2,5 @@
 	"token": "Bot Token Here - DO NOT SHARE YOUR TOKEN OR YOUR CONFIG FILE",
 	"clientId": "0123456789012345678",
 	"botName": "Konpeki Bot",
-    "botOwner": "DiscordUser#1234"
+    "botOwner": "discordusername"
 }
