@@ -13,6 +13,6 @@ module.exports = {
         .setName('invite')
         .setDescription(`Invite ${botName} to your own server`),
     async execute(interaction) {
-        await interaction.reply({ content: `Use this link to invite ${botName} (That's me!) to your own server!\nhttps://discord.com/oauth2/authorize?client_id=${clientId}&permissions=274877908992&scope=bot%20applications.commands`, ephemeral: true });
+        await interaction.reply({ content: `Use this link to invite ${botName} (That's me!) to your own server!\nhttps://discord.com/oauth2/authorize?client_id=${clientId}&permissions=275146345472&scope=bot%20applications.commands`, ephemeral: true });
     },
 };
