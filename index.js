@@ -13,6 +13,9 @@ const metrics = require('./utils/pm2-metrics.js');
 // Use a custom logging script
 const logger = require('./utils/logging.js');
 
+// Listen for (Semi-)Permenant Interactions
+const interactionListener = require('./utils/interaction-trigger.js');
+
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token, botOwner } = require('./config.json');
@@ -60,47 +63,52 @@ client.once(Events.ClientReady, c => {
 // Client "on" Events
 // Someone used an interaction
 client.on(Events.InteractionCreate, async interaction => {
-    if (!interaction.isChatInputCommand()) return;
+    if (interaction.isChatInputCommand()) {
 
-    const command = interaction.client.commands.get(interaction.commandName);
+        const command = interaction.client.commands.get(interaction.commandName);
 
-    if (!command) {
-        logger.log(logger.logLevels.ERROR, `No command matching ${interaction.commandName} was found.`);
-        await interaction.reply({ content: `This command no longer exists! Please contact ${botOwner} to report that this is happening!`, ephemeral: true });
+        if (!command) {
+            logger.log(logger.logLevels.ERROR, `No command matching ${interaction.commandName} was found.`);
+            await interaction.reply({ content: `This command no longer exists! Please contact ${botOwner} to report that this is happening!`, ephemeral: true });
 
-        // Report error to PM2 dashboard
-        metrics.interactionErrors.inc();
-        metrics.io.notifyError(new Error('Interaction doesn\'t exist'), {
-            custom: {
-                interactionCommand: interaction.commandName,
-            },
-        });
+            // Report error to PM2 dashboard
+            metrics.interactionErrors.inc();
+            metrics.io.notifyError(new Error('Interaction doesn\'t exist'), {
+                custom: {
+                    interactionCommand: interaction.commandName,
+                },
+            });
 
-        return;
+            return;
+        }
+
+        try {
+            await command.execute(interaction);
+        }
+        catch (error) {
+            logger.log(logger.logLevels.ERROR, error);
+            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+
+            // Report error to PM2 dashboard
+            metrics.interactionErrors.inc();
+            metrics.io.notifyError(new Error('Error executing interaction'), {
+                custom: {
+                    interactionCommand: interaction.commandName,
+                    error: error,
+                },
+            });
+        }
+        // Successful Execution, report as a PM2 metric
+        // If the bot gets a lot of use, consider removing this for performance
+        metrics.interactionSuccess();
+
     }
-
-    try {
-        await command.execute(interaction);
+    else if (interaction.isButton()) {
+        interactionListener.buttonInteraction(interaction);
     }
-    catch (error) {
-        logger.log(logger.logLevels.ERROR, error);
-        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-
-        // Report error to PM2 dashboard
-        metrics.interactionErrors.inc();
-        metrics.io.notifyError(new Error('Error executing interaction'), {
-            custom: {
-                interactionCommand: interaction.commandName,
-                error: error,
-            },
-        });
-
+    else if (interaction.isStringSelectMenu()) {
+        // respond to the select menu
     }
-
-    // Successful Execution, report as a PM2 metric
-    // If the bot gets a lot of use, consider removing this for performance
-    metrics.interactionSuccess();
-
 });
 
 // Joined a server
