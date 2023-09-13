@@ -21,7 +21,7 @@ module.exports = {
             .addFields(
                 { name: 'Admin of this bot', value: `${botOwner}` },
                 { name: 'Websocket Heartbeat / Ping', value: `${interaction.client.ws.ping}ms` },
-                { name: 'Invite Link', value: `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=274877908992&scope=bot%20applications.commands`, inline: true },
+                { name: 'Invite Link', value: `https://discord.com/oauth2/authorize?client_id=${clientId}&permissions=275146345472&scope=bot%20applications.commands`, inline: true },
                 { name: 'Based on the open source Konpeki Discord Bot', value: 'https://github.com/TheShadowEevee/Konpeki-Discord-Bot', inline: true },
             )
             .setFooter({ text: `Support for custom changes should go through the admin of this bot, ${botOwner}. Support for the underlying Konpeki Discord Bot is available at https://discord.gg/Zt8zruXexJ.` });
