@@ -3,14 +3,14 @@
 
 Konpeki is a Discord Bot with varied functions. Written with discord.js, the Konpeki bot is designed to be easy to use and setup, as well as easy to change to work how you want it to. The name Konpeki comes from the Japenese word for Azure; there's no other reason for the name.
 
-For general support, or to try out a live version of the bot, feel free to join the bot's [Discord Server](https://discord.gg/Zt8zruXexJ)!
+For general support, or to try out a live, public version of the bot, feel free to join the bot's [Discord Server](https://discord.gg/Zt8zruXexJ)!
 
-The live version of the bot is `Konpeki Shiho#2603`, run by TheShadowEevee. The bot `Little Shiho#7869` is a private bot run when developing, and should bot be used as an indicator of any capabilities.
+The live version of the bot is `Konpeki Shiho#2603`, run by TheShadowEevee.
 
 
 ## Adding to your server
 
-You can add the public bot, Konpeki Shiho, to your server [here](https://discord.com/oauth2/authorize?client_id=812862868721631272&permissions=274877908992&scope=bot%20applications.commands)!
+You can add the public bot, Konpeki Shiho, to your server [here](https://discord.com/oauth2/authorize?client_id=812862868721631272&permissions=275146345472&scope=bot%20applications.commands)!
  - Please note that currently Konpeki Shiho is *not* a verified bot due to lack of server membership. You can help get the bot verified by adding it to your server! Konpeki Shiho runs and updates directly off of the code from this repository, while development is done primarily against the private bot Little Shiho.
 
 If you are running your own version of the Konpeki bot, change the Client ID in the link to your bot's Client ID  found in the Discord Developer portal. See [Running Locally](#Running-Locally) for more.
