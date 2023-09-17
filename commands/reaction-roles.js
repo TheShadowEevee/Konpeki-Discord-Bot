@@ -6,7 +6,7 @@
 *  PLEASE NOTE: This code is a certified mess. It is readable to someone with some knowledge, but be warned this is not a great template for new commands to be based on.
 */
 
-const { ChannelSelectMenuBuilder, RoleSelectMenuBuilder, SlashCommandBuilder, ActionRowBuilder, ChannelType, ButtonBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { ChannelSelectMenuBuilder, RoleSelectMenuBuilder, SlashCommandBuilder, ActionRowBuilder, ChannelType, ButtonBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, PermissionsBitField } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout;
 
 let nullResponse, nullCheckResponse, channelID, roleArray, embedTitle, embedDescription, embedColor, embedFooter;
@@ -258,9 +258,13 @@ const modals = [null, null, null, null, rowArray.embedModal, null, null];
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('reaction-roles')
-        .setDescription('Setup Reaction Roles in a Channel'),
+        .setDescription('Setup Reaction Roles in a Channel (Manage Roles Required)'),
 
     async execute(interaction) {
+
+        if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
+            interaction.reply({ content: 'You do not have the Manage Roles Permission!', ephemeral: true });
+        }
 
         let currPage = 0;
 
@@ -282,7 +286,7 @@ module.exports = {
         collector.on('collect', async i => {
 
             if (i.customId === 'nextPage') {
-                nullResponse = await this.nullCheck(currPage);
+                nullResponse = await this.validityCheck(currPage, interaction);
                 currPage = nullResponse[0];
                 i.deferUpdate();
                 this.editReply(interaction, pages[currPage], nullResponse[1]);
@@ -333,7 +337,7 @@ module.exports = {
             if (i.customId === 'finalPage') {
                 currPage += 1;
                 i.deferUpdate();
-                nullCheckResponse = await this.finalNullCheck();
+                nullCheckResponse = await this.finalCheck();
                 this.editReply(interaction, pages[currPage], 'You\'ve reached the last page!\nBelow is a status readout. Please ensure all non-optional items are marked Green. If a required item is marked Red, go back and start from that page again.\n\n' + nullCheckResponse);
             }
 
@@ -366,16 +370,30 @@ module.exports = {
         });
     },
 
-    async nullCheck(currentPage) {
+    async validityCheck(currentPage, interaction) {
         switch (currentPage) {
             case 1:
                 if (!channelID) {
                     return [currentPage, 'Please enter a response! If you have, please wait a second and try again.\n'];
                 }
+                if (!interaction.guild.members.me.permissionsIn(interaction.client.channels.cache.get(channelID)).has(PermissionsBitField.Flags.SendMessages)) {
+                    return [currentPage, 'Missing the Send Messages permission in that channel. Please ensure the bot has the proper permissions to talk in that channel.\n'];
+                }
+                if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
+                    return [currentPage, 'You are missing the Send Messages permission in that channel. Please ensure you have the proper permissions to talk in that channel.\n'];
+                }
                 break;
             case 2:
                 if (!roleArray) {
                     return [currentPage, 'Please enter a response! If you have, please wait a second and try again.\n'];
+                }
+                for (const roleIndex in roleArray) {
+                    const role = await interaction.guild.roles.fetch(roleArray[roleIndex]);
+                    if (interaction.guild.ownerId != interaction.member.id) {
+                        if (interaction.member.roles.highest.position < role.position) {
+                            return [currentPage, `The role ${role.name} is higher in the role hierarchy than your highest role. Please ensure you have the proper permissions to modify this role.\n`];
+                        }
+                    }
                 }
                 break;
             case 4:
@@ -392,7 +410,7 @@ module.exports = {
         return [currentPage + 1, ''];
     },
 
-    async finalNullCheck() {
+    async finalCheck() {
         let content = ':green_circle: - No Problems\n:red_circle: - Missing Information\n\n';
         if (!channelID) {
             content += ':red_circle:';
