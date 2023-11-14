@@ -70,7 +70,7 @@ module.exports = {
         let rollSum = 0;
 
         for (let i = 0; i < rollCount; i++) {
-            const randomNum = randomInt(1, dieType);
+            const randomNum = randomInt(1, dieType + 1);
 
             diceRolls.push(randomNum);
             rollSum += randomNum;
@@ -92,7 +92,7 @@ module.exports = {
         const diceRollsString = diceRolls.toString().split(',').join(' + ');
 
         for (let i = 0; i < rollCount; i++) {
-            diceRolls.push(randomInt(1, dieType));
+            diceRolls.push(randomInt(1, dieType + 1));
         }
 
         await interaction.reply({ content: `\`${rollCount}d${dieType}${rollModNota}\`\n\`Rolls: ( ${diceRollsString} )${rollModStr} = ${rollSum + rollMod}\``, ephemeral: (isEphemeral === 'true') });
