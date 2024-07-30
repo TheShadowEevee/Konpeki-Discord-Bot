@@ -22,7 +22,10 @@ const { token, botOwner } = require('./config.json');
 const { activity, status } = require('./presence.json');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+] });
 
 // Setup the commands collection
 client.commands = new Collection();
